@@ -1,9 +1,13 @@
 #include <stdio.h>
+#include <string.h>
 
 int main()
 {
-    int option,id[99],quantite[99],count = 0;
-    char livre[30][99], auteur[10][99];
+    int option =0,id[99],quantite[99],count = 0;
+    int exist=0;
+    float prix[99];
+    char search[10];
+    char livre[99][10], auteur[99][10];
      while (option<=6)
     {
     printf("+========================================+\n");
@@ -21,22 +25,84 @@ int main()
    
         switch (option)
         {
-       case 1:
-        count++;
-        id[count] = count;
+          case 1:
+            count++;
+           id[count] = count ;
             printf("Nom de livres:\n");
             scanf("%s",livre[count]);
             printf("Nom d'auteur:\n");
             scanf("%s",auteur[count]);
             printf("Quantite:\n");
             scanf("%d",&quantite[count]);
+            printf("Prix:\n");
+            scanf("%f",&prix[count]);
+
+          break;
+          case 2:
+            for(int i=1; i<=count;i++){
+              printf("%d  | ",id[i]);
+              printf("%s  |",livre[i]);
+              printf("%s  |",auteur[i]);
+              printf("%d  |",quantite[i]);
+              printf("%f Dhs  |\n",prix[i]);
+
+            } 
+          break;
+          case 3:
+        exist = 0;
+            printf("Titre de Livre\n");
+            scanf("%s",search);
+           for (int i =1; i <=count;i++){
+               if(strcmp(livre[i],search) ==0){
+                  printf("Trouvee: %s\n",livre[i]);
+                     exist =1;
+                     }
+            }
+        if (exist ==0) {
+          printf("n'existe pas\n");
+        }
+            
+          break;
+        case 4:
+        exist = 0;
+            int nq;
+            printf("Titre de Livre\n");
+            scanf("%s",search);
+           for (int i =1; i <=count;i++){
+               if(strcmp(livre[i],search) ==0){
+                  printf("entrer nouveau quantite:\n");
+                    scanf("%d",&nq);
+                    quantite[i] = nq;
+                     exist =1;
+                     }
+            }
+        if (exist ==0) {
+          printf("n'existe pas\n");
+        } 
         break;
-        case 2:
-            printf("%d  | ",id[count]);
-            printf("%s          |",livre[count]);
-            printf("%s      |",auteur[count]);
-            printf("%d      |\n",quantite[count]);
-        
+      case 5:
+        //supprimer
+            printf("Titre de Livre pour supprimer:\n");
+            scanf("%s",search);
+                 for (int i =1; i <=count;i++){
+                    if(strcmp(livre[i],search) ==0){
+                      strcpy(livre[i],livre[i+1]);
+                      strcpy(auteur[i],livre[i+1]);
+                      id[i] = id[i+1];
+                      prix[i] = prix[i+1];
+                      quantite[i] = quantite[i+1];
+                     count--; 
+                     exist =1;
+                     }
+            }
+        if (exist ==0) {
+          printf("n'existe pas\n");
+        }
+        //
+      break;
+      case 6:
+        //total
+        printf("Total de livres: %d\n",count);
         break;
         case 7:
         option =7;
